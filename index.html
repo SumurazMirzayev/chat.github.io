@@ -1,79 +1,84 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
-    <title>Örnek Site</title>
+    <title>Chat Web Sayti</title>
     <style>
-      /* CSS burada */
       body {
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
       }
       header {
-        background-color: #333;
+        background-color: #2c3e50;
         color: white;
-        padding: 20px;
+        padding: 1rem;
         text-align: center;
       }
-      nav {
-        background-color: #666;
-        color: white;
+      #messages {
+        border: 1px solid #ccc;
+        height: 300px;
+        overflow-y: scroll;
+        padding: 1rem;
+      }
+      form {
+        background-color: #f1f1f1;
         display: flex;
-        justify-content: space-between;
-        padding: 10px;
+        flex-direction: column;
+        padding: 1rem;
       }
-      nav ul {
-        display: flex;
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
+      input[type="text"],
+      button {
+        font-size: 1rem;
+        padding: 0.5rem;
+        margin-bottom: 0.5rem;
       }
-      nav ul li a {
+      button {
+        background-color: #2c3e50;
+        border: none;
         color: white;
-        padding: 10px;
-        text-decoration: none;
+        cursor: pointer;
+        font-weight: bold;
       }
-      nav ul li a:hover {
-        background-color: #999;
-      }
-      section {
-        padding: 20px;
-      }
-      footer {
-        background-color: #ccc;
-        color: #333;
-        padding: 10px;
-        text-align: center;
+      button:hover {
+        background-color: #34495e;
       }
     </style>
   </head>
   <body>
     <header>
-      <h1>Örnek Site</h1>
+      <h1>Chat Web Sayti</h1>
     </header>
-    <nav>
-      <ul>
-        <li><a href="#">Anasayfa</a></li>
-        <li><a href="#">Hakkımızda</a></li>
-        <li><a href="#">Hizmetler</a></li>
-        <li><a href="#">İletişim</a></li>
-      </ul>
-      <form action="#" method="get">
-        <input type="text" placeholder="Ara...">
-        <button type="submit">Ara</button>
-      </form>
-    </nav>
-    <section>
-      <h2>Bölüm Başlığı</h2>
-      <p>Bu bir örnek bölüm. Buraya sitenizle ilgili bilgi veya içerik ekleyebilirsiniz.</p>
-    </section>
-    <section>
-      <h2>Başka Bir Bölüm Başlığı</h2>
-      <p>Bu da başka bir örnek bölüm. Buraya sitenizle ilgili farklı bir içerik ekleyebilirsiniz.</p>
-    </section>
-    <footer>
-      <p>Telif Hakkı © 2023 Örnek Site</p>
-    </footer>
+    <div id="messages"></div>
+    <form>
+      <input type="text" id="nameInput" placeholder="Ad" />
+      <input type="text" id="messageInput" placeholder="Mesajınız" />
+      <button type="submit">Gönder</button>
+    </form>
+
+    <script>
+      let nameInput = document.getElementById("nameInput");
+      let messageInput = document.getElementById("messageInput");
+      let messages = document.getElementById("messages");
+      let name = null;
+
+      function sendMessage() {
+        let message = messageInput.value;
+        let messageElement = document.createElement("div");
+        messageElement.textContent = name + ": " + message;
+        messages.appendChild(messageElement);
+        messageInput.value = "";
+      }
+
+      document.querySelector("form").addEventListener("submit", (event) => {
+        event.preventDefault();
+        if (name === null) {
+          name = nameInput.value;
+          nameInput.disabled = true; // kullanıcının ismini yeniden değiştirmesini engeller
+          messageInput.focus(); // mesaj girdiği alanı seçer
+        } else {
+          sendMessage();
+        }
+      });
+    </script>
   </body>
 </html>
